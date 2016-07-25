@@ -18,8 +18,6 @@
 
 @property (strong, nonatomic) RTEvent *event2;
 
-@property (strong, nonatomic) RTEvent *event3;
-
 @end
 
 @implementation ViewController
@@ -59,40 +57,47 @@
     self.event1 = [[RTEvent alloc] initWithIdentifier:@"Event1"];
     self.event2 = [[RTEvent alloc] initWithIdentifier:@"Event2"];
     
+    __weak typeof(self) wself = self;
+    RTAction *action1 = [[RTAction alloc] initWithBlock:^{
+        wself.colorView.backgroundColor = [UIColor cyanColor];
+        wself.label.text = @"State1-->Event1-->State2";
+    }];
+    
+    RTAction *action2 = [[RTAction alloc] initWithBlock:^{
+        wself.colorView.backgroundColor = [UIColor grayColor];
+        wself.label.text = @"State1-->Event2-->State3";
+    }];
+    
+    RTAction *action3 = [[RTAction alloc] initWithBlock:^{
+        wself.colorView.backgroundColor = [UIColor lightGrayColor];
+        wself.label.text = @"State2-->Event1-->State4";
+    }];
+    
+    RTAction *action4 = [[RTAction alloc] initWithBlock:^{
+        wself.colorView.backgroundColor = [UIColor redColor];
+        wself.label.text = @"State3-->Event1-->State4";
+    }];
+    
+    RTAction *action5 = [[RTAction alloc] initWithBlock:^{
+        wself.colorView.backgroundColor = [UIColor redColor];
+        wself.label.text = @"State4-->Event1-->State1";
+    }];
+    
+    [self.machine registerStates:@[s1, s2, s3, s4] andEvents:@[self.event1, self.event2]];
+    
     [self.machine linkState:s1 toState:s2 forEvent:self.event1];
     [self.machine linkState:s1 toState:s3 forEvent:self.event2];
     [self.machine linkState:s2 toState:s4 forEvent:self.event1];
     [self.machine linkState:s3 toState:s4 forEvent:self.event1];
     [self.machine linkState:s4 toState:s1 forEvent:self.event1];
     
+    [self.machine registerAction:action1 toState:s1 forEvent:self.event1];
+    [self.machine registerAction:action2 toState:s1 forEvent:self.event2];
+    [self.machine registerAction:action3 toState:s2 forEvent:self.event1];
+    [self.machine registerAction:action4 toState:s3 forEvent:self.event1];
+    [self.machine registerAction:action5 toState:s4 forEvent:self.event1];
+    
     self.machine.currentState = s1;
-    
-    __weak typeof(self) wself = self;
-    [s1 registerAction:[[RTAction alloc] initWithBlock:^{
-        wself.colorView.backgroundColor = [UIColor cyanColor];
-        wself.label.text = @"State1-->Event1-->State2";
-    }] forEvent:self.event1];
-    
-    [s1 registerAction:[[RTAction alloc] initWithBlock:^{
-        wself.colorView.backgroundColor = [UIColor grayColor];
-        wself.label.text = @"State1-->Event2-->State3";
-    }] forEvent:self.event2];
-    
-    [s2 registerAction:[[RTAction alloc] initWithBlock:^{
-        wself.colorView.backgroundColor = [UIColor lightGrayColor];
-        wself.label.text = @"State2-->Event1-->State4";
-    }] forEvent:self.event1];
-    
-    [s3 registerAction:[[RTAction alloc] initWithBlock:^{
-        wself.colorView.backgroundColor = [UIColor redColor];
-        wself.label.text = @"State3-->Event1-->State4";
-    }] forEvent:self.event1];
-    
-    [s4 registerAction:[[RTAction alloc] initWithBlock:^{
-        wself.colorView.backgroundColor = [UIColor redColor];
-        wself.label.text = @"State4-->Event1-->State1";
-    }] forEvent:self.event1];
-    
 }
 
 

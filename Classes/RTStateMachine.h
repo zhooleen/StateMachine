@@ -20,6 +20,21 @@
 //当一个事件到来的时候，处理状态转换和执行相关操作
 - (void) performEvent:(RTEvent*)event;
 
+/**
+ *                Event
+ *  state --------------------> switch to toState
+ */
 - (void) linkState:(RTState*)state toState:(RTState*)toState forEvent:(RTEvent*)event;
+
+/**
+ *                Event
+ *  state --------------------> perform action
+ */
+- (void) registerAction:(RTAction*)action toState:(RTState*)toState forEvent:(RTEvent*)event;
+
+/**
+ * register states & events before other operations to make sure validation.
+ */
+- (void) registerStates:(NSArray*)states andEvents:(NSArray*)events;
 
 @end

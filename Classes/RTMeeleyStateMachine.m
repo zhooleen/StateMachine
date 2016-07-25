@@ -27,6 +27,9 @@
 }
 
 - (void) performEvent:(RTEvent *)event {
+    if(![self.events containsObject:event]) {
+        return;
+    }
     id<RTState> state = [self.currentState nextStateForEvent:event];
     if(state == nil) {
         return;
@@ -47,11 +50,27 @@
     return proxy;
 }
 
+- (void) setProxyForState:(RTState*)state {
+    if(state.proxy == nil) {
+        RTStateProxy *proxy = [[RTStateProxy alloc] initWithState:state];
+        _proxyMap[state.identifier] = proxy;
+    }
+}
+
 - (void) linkState:(RTState*)state toState:(RTState*)toState forEvent:(RTEvent*)event {
     RTStateProxy *proxy = [self proxyForState:state];
     [proxy registerNextState:toState forEvent:event];
 }
 
+- (void) registerAction:(RTAction*)action toState:(RTState*)state forEvent:(RTEvent*)event {
+    [state registerAction:action forEvent:event];
+}
 
+- (void) registerStates:(NSArray*)states andEvents:(NSArray*)events{
+    for(RTState* state in states) {
+        [self setProxyForState:state];
+    }
+    self.events = [events copy];
+}
 
 @end

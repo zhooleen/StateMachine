@@ -19,6 +19,6 @@
 
 @interface RTMeeleyStateMachine : NSObject<RTStateMachine>
 
-@property (strong, nonatomic) id<RTState> currentState;
+@property (strong, nonatomic) RTState *currentState;
 
 @end

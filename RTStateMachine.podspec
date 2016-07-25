@@ -1,5 +1,5 @@
 #
-#  Be sure to run `pod spec lint StateMachine.podspec' to ensure this is a
+#  Be sure to run `pod spec lint RTStateMachine.podspec' to ensure this is a
 #  valid spec and to remove all comments including this before submitting the spec.
 #
 #  To learn more about Podspec attributes see http://docs.cocoapods.org/specification.html
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   #  summary should be tweet-length, and the description more in depth.
   #
 
-  s.name         = "StateMachine"
+  s.name         = "RTStateMachine"
   s.version      = "1.0.0"
   s.summary      = "Simple implementation of State-machine with target-action or block using Objective-C"
 
@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
 	Simple implementation of State-machine with target-action or block using Objective-C.
-	It is very easy to build up the machine, and let it work.
+	An easy way to build up state machine graph.
                    DESC
 
   s.homepage     = "https://github.com/zhooleen/StateMachine"
@@ -41,7 +41,7 @@ Pod::Spec.new do |s|
   #
 
   s.license      = "MIT"
-  # s.license      = { :type => "MIT", :file => " }
+  # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
 
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -66,7 +66,7 @@ Pod::Spec.new do |s|
   #
 
   # s.platform     = :ios
-  s.platform     = :ios, "7.0"
+   s.platform     = :ios, "7.0"
 
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
@@ -81,7 +81,8 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source = { :git => "https://github.com/zhooleen/StateMachine.git", :tag => s.version }
+  s.source       = { :git => "https://github.com/zhooleen/StateMachine.git", :tag => "#{s.version}" }
+
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
